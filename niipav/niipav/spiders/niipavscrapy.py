@@ -18,6 +18,3 @@ class NiipavscrapySpider(scrapy.Spider):
         name = response.css("div.elementor-widget-container h1 strong ::text").getall()[1]
         CAS = response.css("div.elementor-widget-container h4 ::text").getall()[-1]
         yield {"name": name, "CAS": CAS}
-
-
-

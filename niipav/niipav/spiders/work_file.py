@@ -1,6 +1,14 @@
-import pandas as pd
+import scrapy
+from scrapy.linkextractors import LinkExtractor
 
 
-df = pd.read_csv(r"C:\Users\Dmitriy\YandexDisk\SNABIO\niipav\info_niipav.csv")
+class MySpider(scrapy.Spider):
+    name = 'myspider'
 
-df.to_excel("info_niipav.xlsx", index=False)
+    start_urls = ['https://niipav.ru/production/']
+
+    def parse(self, response):
+        link_extractor = LinkExtractor()
+        links = link_extractor.extract_links(response)
+        for link in links:
+            yield {'link': link}
