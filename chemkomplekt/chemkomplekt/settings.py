@@ -1,4 +1,4 @@
-# Scrapy settings for him_tech project
+# Scrapy settings for chemkomplekt project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,17 +7,32 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "him_tech"
+# SPLASH_URL = "http://localhost:8050"
 
-SPIDER_MODULES = ["him_tech.spiders"]
-NEWSPIDER_MODULE = "him_tech.spiders"
+from shutil import which
+
+BOT_NAME = "chemkomplekt"
+
+SPIDER_MODULES = ["chemkomplekt.spiders"]
+NEWSPIDER_MODULE = "chemkomplekt.spiders"
+
+from selenium.webdriver.chrome.service import Service
+
+SELENIUM_DRIVER_NAME = 'chrome'
+# SELENIUM_DRIVER_EXECUTABLE_PATH = which('chromedriver')
+SELENIUM_DRIVER_EXECUTABLE_PATH = r'C:\Users\Dmitriy\chromedriver.exe'
+#SELENIUM_DRIVER_ARGUMENTS = ['--headless']
+SELENIUM_DRIVER_ARGUMENTS=['--no-sandbox', '--disable-dev-shm-usage']
+SELENIUM_COMMAND_EXECUTOR = 'http://localhost:4444/wd/hub'
+# SELENIUM_DRIVER_SERVICE_ARGS = []
+# SELENIUM_DRIVER_SERVICE = Service(SELENIUM_DRIVER_EXECUTABLE_PATH)
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "him_tech (+http://www.yourdomain.com)"
+#USER_AGENT = "chemkomplekt (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = False
+ROBOTSTXT_OBEY = False #True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -25,7 +40,7 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY = 2
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -44,20 +59,21 @@ DOWNLOAD_DELAY = 1
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    "him_tech.middlewares.HimTechSpiderMiddleware": 543,
-#}
+SPIDER_MIDDLEWARES = {
+   "chemkomplekt.middlewares.ChemkomplektSpiderMiddleware": 543,
+   # 'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    "him_tech.middlewares.HimTechDownloaderMiddleware": 543,
-#}
-
-# DOWNLOADER_MIDDLEWARES = {
-#     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-#     'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
-# }
+DOWNLOADER_MIDDLEWARES = {
+   # "chemkomplekt.middlewares.ChemkomplektDownloaderMiddleware": 543,
+   #'scrapy_splash.SplashCookiesMiddleware': 723,
+   #  'scrapy_splash.SplashMiddleware': 725,
+   #  'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+   #  'scrapy.downloadermiddlewares.offsite.OffsiteMiddleware': None,
+   'scrapy_selenium.SeleniumMiddleware': 800,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -68,7 +84,7 @@ DOWNLOAD_DELAY = 1
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    "him_tech.pipelines.HimTechPipeline": 300,
+#    "chemkomplekt.pipelines.ChemkomplektPipeline": 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -96,12 +112,14 @@ DOWNLOAD_DELAY = 1
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+# settings.py
+
+DOWNLOAD_HANDLERS = {
+    "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+    "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+}
 
 
+# DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+# HTTP_CACHE_STORAGE = 'scrapy_splash.SplashAwareHTTPCacheStorage'
 
-# DOWNLOAD_HANDLERS = {
-#     "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
-#     "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
-# }
-#
-# TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
