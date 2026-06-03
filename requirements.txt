@@ -1,0 +1,6 @@
+Scrapy
+scrapy-playwright
+scrapy-selenium
+selenium
+pandas
+openpyxl

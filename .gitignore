@@ -27,3 +27,15 @@ db.sqlite3
 
 # Документация
 АНАЛИЗ_КОДА_И_ПЕРСПЕКТИВ.md
+PLAN.md
+
+# Data and experimental files
+*.csv
+*.xlsx
+*.ipynb
+data/
+notebooks/
+
+# Webdrivers and executables
+*.exe
+

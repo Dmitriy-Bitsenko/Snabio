@@ -25,12 +25,11 @@ class ChemSpider(scrapy.Spider):
         collected_links = set()
         prev_count = 0
         same_count_times = 0
-        MAX_ATTEMPTS = 80  # Увеличено        
-
+        MAX_ATTEMPTS = 80
 
         for i in range(MAX_ATTEMPTS):
             driver.execute_script("window.scrollBy(0, 2000);")
-            time.sleep(3)  # Увеличено
+            time.sleep(3)
 
             try:
                 WebDriverWait(driver, 10).until(
@@ -49,8 +48,6 @@ class ChemSpider(scrapy.Spider):
             print(f"[{i+1}] Собрано ссылок: {len(collected_links)}")
 
             curr_count = len(collected_links)
-            # if curr_count > 150:
-            #     break
 
             if curr_count == prev_count:
                 same_count_times += 1
@@ -62,12 +59,6 @@ class ChemSpider(scrapy.Spider):
                 print("Подгрузка завершена.")
                 break
 
-        # Сохраняем HTML для отладки при необходимости
-        # with open("final_page.html", "w", encoding="utf-8") as f:
-        #     f.write(driver.page_source)
-        #
-        #     print("❗️Не удалось собрать ни одной ссылки.")
-        #     return
         links  = list(collected_links)
         print(links)
         for link in links:
@@ -80,8 +71,8 @@ class ChemSpider(scrapy.Spider):
         price = response.css('.break-word::text').get().replace('₽', '')
         if country == "химические индикаторы":
             country = None
-        # price = price.replace('\xa0', '').replace('₽', '')
         yield {'title': title,
                'category': category,
                'country': country ,                 
                'price': price}
+        

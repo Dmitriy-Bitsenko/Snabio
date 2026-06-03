@@ -7,7 +7,7 @@ class ChemKomplektSpider(scrapy.Spider):
     name = "chem_aj"
     allowed_domains = ["chemkomplekt.ru"]
     custom_settings = {
-        "DOWNLOAD_DELAY": 1,  # задержка, чтобы не гонять сервер сильно
+        "DOWNLOAD_DELAY": 1,  
         "COOKIES_ENABLED": True,
         "RETRY_ENABLED": True,
         "RETRY_TIMES": 3,
