@@ -8,6 +8,10 @@ class RushimSpider(scrapy.Spider):
     allowed_domains = ["rushim.ru"]
     start_urls = ['https://rushim.ru/index.php?cat=2']
 
+    def __init__(self, *args, **kwargs):
+        super(RushimSpider, self).__init__(*args, **kwargs)
+        self.logger.info(f"Паук запущен с аргументами: {kwargs}")
+
     def parse(self, response):
         """Parse one column."""
         reactives = response.css('div.thumbnail.text-center')

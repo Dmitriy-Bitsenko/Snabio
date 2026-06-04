@@ -1,0 +1,6 @@
+services:
+  snabio_spider:
+    build: .
+    volumes:
+      - .:/app # Это подключит папку проекта Snabio внутрь контейнера в /app
+      - /home/dmitrii/proxifly_http_proxies.txt # Это подключит ваш файл с прокси
